@@ -8,10 +8,13 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-# CGO_ENABLED=0 produces a fully static binary - no libc dependency, so
-# the final image can be minimal. This also means the pure-Go SQLite
-# driver (chosen specifically to avoid needing a C toolchain) works here
-# without any extra build tooling.
+# Re-run tidy inside this (Linux) build environment before compiling.
+# go.sum can be incomplete for a different target platform than the one
+# it was generated on - modernc.org/sqlite has OS-specific generated
+# code, so a go.sum produced by `go mod tidy` on Windows doesn't always
+# carry every checksum needed for a Linux build. Regenerating it here
+# guarantees correctness for the platform actually being built.
+RUN go mod tidy
 RUN CGO_ENABLED=0 GOOS=linux go build -o /sentinel-server ./cmd/server
 
 # --- Run stage ---
