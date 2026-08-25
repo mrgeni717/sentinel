@@ -1,0 +1,22 @@
+services:
+  sentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sentinel-server
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    environment:
+      SENTINEL_DB_PATH: /data/sentinel.db
+      SENTINEL_PORT: 8090
+      SENTINEL_STATIC_DIR: /app/web/static
+      SENTINEL_INGEST_KEY: ${SENTINEL_INGEST_KEY}
+    volumes:
+      # Named volume so the SQLite database survives container
+      # restarts/rebuilds - the whole point of not using a separate DB
+      # container is that this one file *is* the database.
+      - sentinel-data:/data
+
+volumes:
+  sentinel-data:

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sentinel</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="logo">sentinel</div>
+      <div class="subtitle">systems monitoring</div>
+    </div>
+
+    <div class="panel">
+      <h2>Uptime Targets</h2>
+      <table>
+        <thead><tr><th>Name</th><th>URL</th><th>Status</th><th>Response</th><th>Last Checked</th><th></th></tr></thead>
+        <tbody id="targetsBody"></tbody>
+      </table>
+      <div class="empty hidden" id="targetsEmpty">No targets yet — add one below.</div>
+      <form class="inline" id="targetForm">
+        <input type="text" id="targetName" placeholder="Name" required />
+        <input type="url" id="targetUrl" placeholder="https://example.com" required />
+        <input type="number" id="targetInterval" placeholder="Interval (s)" value="60" min="10" style="width:120px;" />
+        <button type="submit">+ Add Target</button>
+      </form>
+      <div class="error-text" id="targetError"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Hosts</h2>
+      <table>
+        <thead><tr><th>Host</th><th>CPU</th><th>Memory</th><th>Disk</th><th>Last Seen</th></tr></thead>
+        <tbody id="hostsBody"></tbody>
+      </table>
+      <div class="empty hidden" id="hostsEmpty">No hosts reporting yet — run the agent pointed at this server.</div>
+    </div>
+
+    <div class="panel">
+      <h2>Alert Rules</h2>
+      <table>
+        <thead><tr><th>Name</th><th>Applies To</th><th>Metric</th><th>Condition</th><th></th></tr></thead>
+        <tbody id="rulesBody"></tbody>
+      </table>
+      <div class="empty hidden" id="rulesEmpty">No alert rules configured.</div>
+      <form class="inline" id="ruleForm">
+        <input type="text" id="ruleName" placeholder="Rule name" required />
+        <select id="ruleTargetType">
+          <option value="target">Uptime Target</option>
+          <option value="host">Host</option>
+        </select>
+        <select id="ruleTargetRef"></select>
+        <select id="ruleMetric">
+          <option value="uptime_down">Uptime Down</option>
+          <option value="cpu_percent">CPU %</option>
+          <option value="memory_percent">Memory %</option>
+          <option value="disk_percent">Disk %</option>
+        </select>
+        <select id="ruleOperator">
+          <option value="gt">&gt;</option>
+          <option value="lt">&lt;</option>
+        </select>
+        <input type="number" id="ruleThreshold" placeholder="Threshold" value="90" style="width:100px;" />
+        <input type="text" id="ruleWebhook" placeholder="Webhook URL (optional)" style="flex:1;min-width:180px;" />
+        <button type="submit">+ Add Rule</button>
+      </form>
+      <div class="error-text" id="ruleError"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Alert History</h2>
+      <table>
+        <thead><tr><th>Rule</th><th>Status</th><th>Message</th><th>Fired</th><th>Resolved</th></tr></thead>
+        <tbody id="alertsBody"></tbody>
+      </table>
+      <div class="empty hidden" id="alertsEmpty">No alerts fired yet.</div>
+    </div>
+  </div>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

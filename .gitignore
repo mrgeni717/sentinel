@@ -1,0 +1,6 @@
+/bin/
+*.exe
+*.test
+sentinel.db
+sentinel.db-*
+.env

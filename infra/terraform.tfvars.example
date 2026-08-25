@@ -1,0 +1,9 @@
+# Copy this file to terraform.tfvars and fill in your own values.
+# terraform.tfvars is gitignored - don't commit real values.
+
+github_repo_url = "https://github.com/YOUR_USERNAME/sentinel.git"
+
+# Optional overrides (defaults shown):
+# aws_region       = "us-east-1"
+# instance_type    = "t3.small"
+# ssh_allowed_cidr = "0.0.0.0/0"   # restrict to "YOUR_IP/32" for tighter security
