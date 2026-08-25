@@ -28,7 +28,7 @@ RUN apk add --no-cache ca-certificates
 COPY --from=build /sentinel-server /app/sentinel-server
 COPY web/static /app/web/static
 
-RUN adduser -D -H appuser
+RUN adduser -D -H appuser && mkdir -p /data && chown -R appuser:appuser /data /app
 USER appuser
 
 EXPOSE 8090
